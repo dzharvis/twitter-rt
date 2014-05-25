@@ -12,9 +12,11 @@ import java.util.concurrent.BlockingDeque;
 
 @Component
 public class TwitterDaemon implements Runnable {
+    @Value("${CONSUMER_KEY}")
+    private String CONSUMER_KEY;
 
-    public static final String CONSUMER_KEY = "OA8ufcmmu5LYVAFP8NstCQ";
-    public static final String CONSUMER_SECRET = "DpkyRzEBvIPzDrYsk2KDF9SnRCt1c5PLn71R6lekU";
+    @Value("${CONSUMER_SECRET}")
+    private String CONSUMER_SECRET;
 
     @Value("${token}")
     private String token;
