@@ -2,12 +2,10 @@ package com.dzharvis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import twitter4j.Status;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
 
 @Controller
 public class SocketController {
@@ -18,20 +16,19 @@ public class SocketController {
     @Autowired
     private StatusDispatcher sd;
 
-    private final BlockingDeque<Status> queue = new LinkedBlockingDeque<>(10000);
-
     @PostConstruct
     public void dispatch() throws InterruptedException {
-        td.setQueue(queue);
-        sd.setQueue(queue);
+        td.run();
+        sd.run();
+    }
 
-        new Thread(td).start();
-        new Thread(sd).start();
+    @RequestMapping("/")
+    public String home() {
+        return "index";
     }
 
     @PreDestroy
     public void destroy() {
-        System.out.println("destroyed");
         td.getTwitterStream().shutdown();
     }
 }

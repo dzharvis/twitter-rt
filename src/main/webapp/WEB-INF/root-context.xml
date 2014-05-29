@@ -17,9 +17,13 @@
    http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
     <context:component-scan base-package="com.dzharvis"/>
+    <context:annotation-config/>
     <mvc:annotation-driven/>
     <mvc:resources mapping="/web/**" location="/"/>
     <task:annotation-driven/>
+    <bean id="queue" class="java.util.concurrent.LinkedBlockingDeque">
+        <constructor-arg value="100"/>
+    </bean>
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -28,13 +32,4 @@
             </list>
         </property>
     </bean>
-    <!--<tx:annotation-driven/>-->
-
-    <!--<websocket:message-broker application-destination-prefix="/app">-->
-        <!--<websocket:stomp-endpoint path="/hello">-->
-            <!--<websocket:sockjs/>-->
-        <!--</websocket:stomp-endpoint>-->
-        <!--<websocket:simple-broker prefix="/topic"/>-->
-    <!--</websocket:message-broker>-->
-
 </beans>

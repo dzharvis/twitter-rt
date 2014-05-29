@@ -4,15 +4,17 @@ package com.dzharvis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.core.MessageSendingOperations;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
+import javax.annotation.Resource;
 import java.util.concurrent.BlockingDeque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
-public class StatusDispatcher implements Runnable {
+public class StatusDispatcher {
 
     private static class MyStatus {
         public String text;
@@ -26,9 +28,10 @@ public class StatusDispatcher implements Runnable {
     @Autowired
     private MessageSendingOperations<String> messages;
 
-    private  BlockingDeque<Status> queue;
+    @Resource
+    private BlockingDeque<Status> queue;
 
-    @Override
+    @Async
     public void run() {
         while (true) {
             Status status = null;
@@ -63,11 +66,4 @@ public class StatusDispatcher implements Runnable {
         return sb.toString();
     }
 
-    public BlockingDeque<Status> getQueue() {
-        return queue;
-    }
-
-    public void setQueue(BlockingDeque<Status> queue) {
-        this.queue = queue;
-    }
 }

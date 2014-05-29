@@ -2,16 +2,18 @@ package com.dzharvis;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.concurrent.BlockingDeque;
 
 
 @Component
-public class TwitterDaemon implements Runnable {
+public class TwitterDaemon {
     @Value("${CONSUMER_KEY}")
     private String CONSUMER_KEY;
 
@@ -26,6 +28,7 @@ public class TwitterDaemon implements Runnable {
 
     private TwitterStream twitterStream;
 
+    @Resource
     private BlockingDeque<Status> queue;
 
     @PostConstruct
@@ -66,13 +69,9 @@ public class TwitterDaemon implements Runnable {
 
     }
 
-    @Override
+    @Async
     public void run() {
         twitterStream.sample();
-    }
-
-    public void setQueue(BlockingDeque<Status> queue) {
-        this.queue = queue;
     }
 
     public TwitterStream getTwitterStream() {

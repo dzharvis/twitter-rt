@@ -1,12 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
-    <script src="web/js/sockjs-0.3.4.js"></script>
-    <script src="web/js/stomp.js"></script>
-    <link href="web/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="web/js/jquery-1.7.2.js"></script>
-    <script src="web/js/client.js"></script>
+    <title>via @dzharvis</title>
+    <script src="${pageContext.request.contextPath}/web/js/sockjs-0.3.4.js"></script>
+    <script src="${pageContext.request.contextPath}/web/js/stomp.js"></script>
+    <link href="${pageContext.request.contextPath}/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="${pageContext.request.contextPath}/web/js/jquery-1.7.2.js"></script>
+    <script src="${pageContext.request.contextPath}/web/js/client.js"></script>
 </head>
 <body style="background-color: #333; overflow: hidden">
 <script src="web/js/bootstrap.min.js"></script>
