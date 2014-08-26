@@ -2,17 +2,6 @@ var stompClient = null;
 var dataHash = {};
 var attached = false;
 
-function connect() {
-    var socket = new SockJS('/tw');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/tweets', function (greeting) {
-            handleTweetEvent(greeting);
-        });
-    });
-}
-
 function disconnect() {
     stompClient.disconnect();
     console.log("Disconnected");

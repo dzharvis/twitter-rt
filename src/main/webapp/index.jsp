@@ -10,6 +10,18 @@
     <link href="${pageContext.request.contextPath}/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="${pageContext.request.contextPath}/web/js/jquery-1.7.2.js"></script>
     <script src="${pageContext.request.contextPath}/web/js/client.js"></script>
+    <script type="text/javascript" >
+        function connect() {
+            var socket = new SockJS('${pageContext.request.contextPath}/tw');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/tweets', function (greeting) {
+                    handleTweetEvent(greeting);
+                });
+            });
+        }
+    </script>
 </head>
 <body style="background-color: #333; overflow: hidden">
 <script src="web/js/bootstrap.min.js"></script>
