@@ -14,6 +14,9 @@ import java.util.concurrent.BlockingDeque;
 
 @Component
 public class TwitterDaemon {
+
+    private static final Logger log = Logger.getLogger(SocketEventListener.class);
+
     @Value("${CONSUMER_KEY}")
     private String CONSUMER_KEY;
 
@@ -50,7 +53,7 @@ public class TwitterDaemon {
             }
 
             public void onException(Exception ex) {
-                ex.printStackTrace();
+                log.error(ex.getMessage());
             }
 
             @Override

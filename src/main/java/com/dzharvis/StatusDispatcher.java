@@ -38,7 +38,7 @@ public class StatusDispatcher {
             try {
                 status = queue.takeLast();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                return;
             }
             String text = status.getText();
             double x = status.getGeoLocation().getLongitude();
