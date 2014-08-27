@@ -54,6 +54,11 @@
           <artifactId>spring-websocket</artifactId>
           <version>4.0.4.RELEASE</version>
       </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+          <version>2.5</version>
+      </dependency>
   </dependencies>
   <build>
     <finalName>spr-mvc-sckts</finalName>

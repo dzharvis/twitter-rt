@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class SocketController {
@@ -26,8 +27,12 @@ public class SocketController {
     }
 
     @RequestMapping("/")
-    public String home() {
-        return "index";
+    public String home(HttpServletRequest request) {
+        final String userIpAddress = request.getRemoteAddr();
+        final String userAgent = request.getHeader("user-agent");
+        log.info("Connection from ip: " + userIpAddress);
+        log.info("Connection from agent: " + userAgent);
+        return "/canvas";
     }
 
     @PreDestroy
