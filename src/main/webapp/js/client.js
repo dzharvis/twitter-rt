@@ -1,6 +1,10 @@
 var stompClient = null;
 var dataHash = {};
+var dataList = new LinkedList();
 var attached = false;
+var pic = new Image();
+var canvas = null;// = document.getElementById("example");
+var ctx = null;
 
 function disconnect() {
     stompClient.disconnect();
@@ -10,14 +14,31 @@ function disconnect() {
 function handleTweetEvent(message) {
     var data = JSON.parse(message.body);
     var coord = convertCoordinates(data);
-    doTwitSpot(coord);
+    //doTwitSpot(coord);
     displayCurrentTwit(data);
     var hash = getHash(coord.x, coord.y);
     if (dataHash[hash] == null) {
         dataHash[hash] = [];
     }
     dataHash[hash].push(data);
+    dataList.add(data);
+    if(dataList._length >= 100){
+        var _tmp_coord = convertCoordinates(dataList.item(0));
+        var _tmp_hash = getHash(_tmp_coord.x, _tmp_coord.y);
+        delete dataHash[_tmp_hash];
+        dataList.remove(0);
+    }
+    render();
 }
+
+function render() {
+    ctx.clearRect (0 , 0 , 1000 , 528 );
+    ctx.drawImage(pic, 0, 0, 1000, 528);
+    dataList.toArray().forEach(function(obj){
+       doTwitSpot(convertCoordinates(obj));
+    });
+}
+
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -142,9 +163,8 @@ function attachEventListener() {
     }
 }
 $(document).ready(function () {
-    var canvas = document.getElementById("example");
-    var ctx = canvas.getContext('2d');
-    var pic = new Image();
+    canvas = document.getElementById("example");
+    ctx = canvas.getContext('2d');
     pic.src = 'web/map_d.png';
     pic.onload = function () {
         ctx.drawImage(pic, 0, 0, 1000, 528);

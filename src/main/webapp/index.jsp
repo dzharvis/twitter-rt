@@ -9,6 +9,7 @@
     <script src="${pageContext.request.contextPath}/web/js/stomp.js"></script>
     <link href="${pageContext.request.contextPath}/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="${pageContext.request.contextPath}/web/js/jquery-1.7.2.js"></script>
+    <script src="${pageContext.request.contextPath}/web/js/list.js"></script>
     <script src="${pageContext.request.contextPath}/web/js/client.js"></script>
     <script type="text/javascript" >
         function connect() {
