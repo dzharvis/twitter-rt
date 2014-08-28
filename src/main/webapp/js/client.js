@@ -1,6 +1,6 @@
 var stompClient = null;
 var dataHash = {};
-var dataList = new LinkedList();
+var dataList = [];
 var attached = false;
 var pic = new Image();
 var canvas = null;// = document.getElementById("example");
@@ -21,12 +21,12 @@ function handleTweetEvent(message) {
         dataHash[hash] = [];
     }
     dataHash[hash].push(data);
-    dataList.add(data);
-    if(dataList._length >= 100){
-        var _tmp_coord = convertCoordinates(dataList.item(0));
+    dataList.push(data);
+    if(dataList.length > 100){
+        var _tmp_coord = convertCoordinates(dataList[0]);
         var _tmp_hash = getHash(_tmp_coord.x, _tmp_coord.y);
         delete dataHash[_tmp_hash];
-        dataList.remove(0);
+        dataList.splice(0, 1);
     }
     render();
 }
@@ -34,7 +34,7 @@ function handleTweetEvent(message) {
 function render() {
     ctx.clearRect (0 , 0 , 1000 , 528 );
     ctx.drawImage(pic, 0, 0, 1000, 528);
-    dataList.toArray().forEach(function(obj){
+    dataList.forEach(function(obj){
        doTwitSpot(convertCoordinates(obj));
     });
 }
